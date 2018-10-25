@@ -1,0 +1,51 @@
+{
+  "name": "ts-lambda-starter",
+  "version": "1.0.0",
+  "main": "build/server.js",
+  "author": "Jens Elstner <jens.elstner@technicallyfeasible.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "build": "webpack",
+    "test": "env NODE_ENV=test jest --runInBand",
+    "test:watch": "env NODE_ENV=test jest --watchAll --runInBand",
+    "test:build": "env NODE_ENV=test JEST_SUITE_NAME=Lambda JEST_JUNIT_OUTPUT=./xunit.xml jest --coverage --coverageReporters=lcov text-summary --runInBand --reporters=jest-junit"
+  },
+  "dependencies": {
+    "async-exit-hook": "^2.0.1",
+    "aws-lambda": "^0.1.2",
+    "aws-sdk": "^2.334.0",
+    "config": "^2.0.1",
+    "cross-env": "^5.2.0",
+    "fastest-validator": "^0.6.10",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@types/aws-lambda": "^8.10.14",
+    "@types/jest": "^23.3.5",
+    "@types/lodash": "^4.14.117",
+    "@types/node": "^10.12.0",
+    "babel-loader": "^8.0.4",
+    "husky": "^1.1.2",
+    "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
+    "thread-loader": "^1.2.0",
+    "ts-jest": "^23.10.4",
+    "ts-loader": "^5.2.1",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.30",
+    "tslint": "^5.11.0",
+    "tslint-clean-code": "^0.2.7",
+    "typescript": "^3.1.3",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test"
+    }
+  }
+}

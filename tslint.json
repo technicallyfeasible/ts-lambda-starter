@@ -1,0 +1,15 @@
+{
+   "extends": ["tslint:latest", "tslint-clean-code"],
+   "rules": {
+     "quotemark": [true, "single", "jsx-double"],
+     "interface-name": [true, "never-prefix"],
+     "arrow-parens": [true, "ban-single-arg-parens"],
+     "semicolon": [true, "always", "ignore-bound-class-methods"],
+     "curly": [true, "ignore-same-line"],
+     "newspaper-order": true,
+     "no-map-without-usage": true,
+     "prefer-dry-conditionals": true,
+     "max-func-args": [true, 3],
+     "id-length": [true, 2]
+   }
+}

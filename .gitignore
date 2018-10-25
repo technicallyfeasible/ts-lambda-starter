@@ -1,0 +1,15 @@
+# IDE
+.idea
+.vscode
+
+# misc
+.DS_Store
+*.codekit
+*.desc
+
+# build output
+/node_modules
+xunit.xml
+*.log
+/coverage
+/build
