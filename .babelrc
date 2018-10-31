@@ -3,7 +3,7 @@
     ["@babel/env", {
       "useBuiltIns": "entry",
       "targets": {
-        "node": "8.11.4"
+        "node": "8.10"
       }
     }]
   ]

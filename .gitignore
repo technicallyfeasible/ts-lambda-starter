@@ -13,3 +13,5 @@ xunit.xml
 *.log
 /coverage
 /build
+/config/local*.json
+/.serverless

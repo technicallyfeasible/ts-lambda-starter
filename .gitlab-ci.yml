@@ -1,0 +1,61 @@
+image: node:8-alpine
+
+cache:
+  paths:
+  - node_modules
+
+variables:
+  AWS_REGION: eu-west-2
+
+before_script:
+  - "PACKAGE_VERSION=$(sed -nE 's/^\\s*\"version\": \"(.*?)\",$/\\1/p' package.json)"
+
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - yarn
+    - yarn test:build
+  artifacts:
+    reports:
+      junit: xunit.xml
+    paths:
+      - coverage/
+
+build:
+  stage: build
+  script:
+    - yarn
+    - env NODE_ENV=production yarn build
+  artifacts:
+    paths:
+      - build/
+
+.deploy_template:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+  - npm install -g serverless
+  - sls package -r $AWS_REGION -s $CI_ENVIRONMENT_NAME
+  - sls deploy --conceal -r $AWS_REGION -s $CI_ENVIRONMENT_NAME
+  artifacts:
+    paths:
+      - .serverless/
+    expire_in: 30 days
+
+deploy_dev:
+  extends: .deploy_template
+  only:
+    - develop
+  environment: dev
+
+deploy_prd:
+  extends: .deploy_template
+  only:
+    - master
+  environment: prd

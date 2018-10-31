@@ -1,0 +1,38 @@
+service: ts-lambda-starter
+
+custom:
+  myStage: ${opt:stage, self:provider.stage}
+  myEnvironment:
+    LOG_LEVEL:
+      prd: error
+      dev: debug
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: dev
+  region: eu-west-2
+  memorySize: 128
+  timeout: 30
+  versionFunctions: false
+  environment:
+    LOG_LEVEL: ${self:custom.myEnvironment.LOG_LEVEL.${self:custom.myStage}}
+
+package:
+  exclude:
+    - .idea/**
+    - .vscode/**
+    - src/**
+    - webpack/**
+    - coverage/**
+    - config/local*.json
+
+functions:
+  server:
+    handler: build/server.handler
+    description: API endpoint
+    events:
+    - http:
+        path: "/{proxy+}"
+        method: GET
+        cors: true
