@@ -12,7 +12,8 @@ export default {
     ignored: /node_modules/
   },
   externals: {
-    ...getNodeModules()
+    ...getNodeModules(),
+    'aws-serverless-express/middleware': 'commonjs aws-serverless-express/middleware',
   },
   cache: true,
   devtool: 'source-map',
@@ -47,6 +48,7 @@ export default {
   module: {
     rules: [
       loaders.ts(),
+      loaders.html(),
     ],
   },
 };

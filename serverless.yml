@@ -1,8 +1,9 @@
-service: ts-lambda-starter
+service: api-wirelesscar
 
 custom:
   myStage: ${opt:stage, self:provider.stage}
-  myEnvironment:
+  myRegion: ${opt:region, self:provider.region}
+  myEnv:
     LOG_LEVEL:
       prd: error
       dev: debug
@@ -16,12 +17,65 @@ provider:
   timeout: 30
   versionFunctions: false
   environment:
-    LOG_LEVEL: ${self:custom.myEnvironment.LOG_LEVEL.${self:custom.myStage}}
+    LOG_LEVEL: ${self:custom.myEnv.LOG_LEVEL.${self:custom.myStage}}
+    DATABASE_TYPE: dynamodb
+    DEVICES_TABLE: ${self:service}-${self:custom.myStage}-devices
+    VEHICLES_TABLE: ${self:service}-${self:custom.myStage}-vehicles
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource:
+        - "Fn::GetAtt": [ DevicesTable, Arn ]
+        - "Fn::GetAtt": [ VehiclesTable, Arn ]
+
+resources:
+  Resources:
+    DevicesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.DEVICES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: deviceId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: deviceId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    VehiclesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.VEHICLES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: vin
+            AttributeType: S
+        KeySchema:
+          - AttributeName: vin
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:service}-${self:custom.myStage}
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.WWW-Authenticate: "'Basic'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
 
 package:
   exclude:
     - .idea/**
     - .vscode/**
+    - "node_modules/**/.bin/**"
     - src/**
     - webpack/**
     - coverage/**
@@ -30,9 +84,17 @@ package:
 functions:
   server:
     handler: build/server.handler
-    description: API endpoint
+    description: API to get vehicle information from WirelessCar
     events:
     - http:
         path: "/{proxy+}"
-        method: GET
+        method: ANY
         cors: true
+        authorizer:
+          name: authorizer
+          resultTtlInSeconds: 0
+          identitySource: method.request.header.Authorization
+          type: request
+  authorizer:
+    handler: build/server.authorizer
+    description: Authorizer for the WirelessCar API

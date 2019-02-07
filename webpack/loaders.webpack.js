@@ -27,3 +27,15 @@ export function ts() {
     exclude: /node_modules/,
   };
 }
+
+export function html() {
+  return {
+    test: /\.html$/,
+    use: {
+      loader: 'html-loader',
+      options: {
+        attrs: [':data-src'],
+      },
+    },
+  };
+}

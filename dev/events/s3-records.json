@@ -1,0 +1,70 @@
+[
+  {
+    "eventVersion": "2.0",
+    "eventSource": "aws:s3",
+    "awsRegion": "eu-west-2",
+    "eventTime": "2018-10-31T11:09:45.027Z",
+    "eventName": "ObjectCreated:Put",
+    "userIdentity": {
+      "principalId": "AWS:AROAJPGZ7UO62QWF57H4M:ingest-01-prd-normalize"
+    },
+    "requestParameters": {
+      "sourceIPAddress": "35.178.186.13"
+    },
+    "responseElements": {
+      "x-amz-request-id": "C25E79BE65A5F9A6",
+      "x-amz-id-2": "G1Jpbr+DH2KvlsvMp4Z62s/mZITh55gJMM11m7QheDmajbUgP+Z2Ly+1hxA7gb5YyAka+uA2RRo="
+    },
+    "s3": {
+      "s3SchemaVersion": "1.0",
+      "configurationId": "6d2d4e51-f2a3-4553-ad40-cb56d30f3902",
+      "bucket": {
+        "name": "synaptiv-norm-db",
+        "ownerIdentity": {
+          "principalId": "AUZ5MK33KGI8P"
+        },
+        "arn": "arn:aws:s3:::synaptiv-norm-db"
+      },
+      "object": {
+        "key": "2018/10/31/redtail_999999999999999_3b4136bd-4fac-4242-b6c0-560dd6ffa8a3_1540984184.847854.geojson",
+        "size": 5786573,
+        "eTag": "96c6754e3e837a17ffd04b52e8f9d90b",
+        "sequencer": "005BD98D78DBDA467E"
+      }
+    }
+  },
+  {
+    "eventVersion": "2.0",
+    "eventSource": "aws:s3",
+    "awsRegion": "eu-west-2",
+    "eventTime": "2018-10-31T13:22:02.527Z",
+    "eventName": "ObjectCreated:Put",
+    "userIdentity": {
+      "principalId": "AWS:AROAJPGZ7UO62QWF57H4M:ingest-01-prd-normalize"
+    },
+    "requestParameters": {
+      "sourceIPAddress": "35.178.186.13"
+    },
+    "responseElements": {
+      "x-amz-request-id": "F11BBD6043AB78D3",
+      "x-amz-id-2": "9jG08d+rr5bl1X13WGY6tz+9YsHfzCQaMWX/Mp3cZJJv/rp74qdBtaDbKn7hUwa5p/uRXHJ5tiE="
+    },
+    "s3": {
+      "s3SchemaVersion": "1.0",
+      "configurationId": "6d2d4e51-f2a3-4553-ad40-cb56d30f3902",
+      "bucket": {
+        "name": "synaptiv-norm-db",
+        "ownerIdentity": {
+          "principalId": "AUZ5MK33KGI8P"
+        },
+        "arn": "arn:aws:s3:::synaptiv-norm-db"
+      },
+      "object": {
+        "key": "2018/10/31/redtail_999999999999999_ae07deef-1028-4a73-a0df-70ce6d94e98d_1540992122.3691208.geojson",
+        "size": 1246481,
+        "eTag": "870a07a98a2aa4a6371fc847601457c2",
+        "sequencer": "005BD9AC7A62B8C39F"
+      }
+    }
+  }
+]

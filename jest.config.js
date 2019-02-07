@@ -18,6 +18,7 @@ module.exports = {
   transform: {
     ...tsJestPresets.defaults.transform,
     '^.+\\.js$': 'babel-jest',
+    '^.+\\.html$': 'html-loader-jest',
   },
   setupFiles: [
     '<rootDir>/src/testSetup.ts'
